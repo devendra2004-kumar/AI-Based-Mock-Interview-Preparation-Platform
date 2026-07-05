@@ -1,0 +1,961 @@
+{
+  "sde": {
+    "technical": [
+      {
+        "question": "What is the difference between a stack and a queue? Give a real-world use case for each.",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Stack is LIFO", "Queue is FIFO", "Stack use case: function call stack or undo/redo", "Queue use case: print queue or task scheduling"]
+      },
+      {
+        "question": "Explain the difference between process and thread. When would you use multithreading?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Process has its own memory space", "Threads share memory within a process", "Multithreading for concurrent tasks", "Context switching overhead"]
+      },
+      {
+        "question": "What is Big O notation? What is the time complexity of binary search?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Big O describes worst-case time/space growth", "Binary search is O(log n)", "Requires sorted array", "Divides search space in half each step"]
+      },
+      {
+        "question": "What is the difference between SQL and NoSQL databases? When would you choose one over the other?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["SQL is structured with fixed schema", "NoSQL is flexible schema", "SQL for ACID transactions", "NoSQL for unstructured or high-scale data"]
+      },
+      {
+        "question": "Explain what REST API is and what makes an API RESTful.",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Representational State Transfer", "Stateless communication", "HTTP methods: GET POST PUT DELETE", "Resources identified by URLs"]
+      },
+      {
+        "question": "What is the difference between HTTP and HTTPS? How does SSL/TLS work at a high level?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["HTTPS encrypts data in transit", "SSL/TLS handshake for key exchange", "Certificates issued by CA", "Prevents man-in-the-middle attacks"]
+      },
+      {
+        "question": "Design a URL shortener like bit.ly. Walk through your system design choices.",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Hash function to generate short code", "Database to store mapping", "Redirect mechanism with 301/302", "Handle collisions and expiry"]
+      },
+      {
+        "question": "What is a deadlock? How can you prevent it?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Deadlock: two processes waiting for each other's resources", "Four conditions: mutual exclusion hold-and-wait no preemption circular wait", "Prevention: resource ordering or timeout", "Banker's algorithm"]
+      },
+      {
+        "question": "Explain the concept of CAP theorem in distributed systems.",
+        "type": "technical",
+        "difficulty": "senior",
+        "key_points": ["Consistency Availability Partition tolerance", "Can only guarantee two of three", "CP systems: HBase MongoDB", "AP systems: Cassandra DynamoDB"]
+      },
+      {
+        "question": "How does garbage collection work in Java or Python? What are its trade-offs?",
+        "type": "technical",
+        "difficulty": "senior",
+        "key_points": ["Automatic memory management", "Mark and sweep or reference counting", "GC pauses affect performance", "Generational GC optimises for short-lived objects"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Tell me about a time you had to debug a critical bug in production. How did you approach it?",
+        "type": "behavioral",
+        "difficulty": "entry",
+        "key_points": ["Systematic debugging approach", "Logs and monitoring used", "Root cause identified", "Prevention steps taken after fix"]
+      },
+      {
+        "question": "Describe a situation where you disagreed with a technical decision made by your team. What did you do?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Raised concern constructively", "Backed opinion with data or reasoning", "Respected team decision", "Outcome and learning"]
+      },
+      {
+        "question": "Tell me about a time you had to learn a new technology quickly under a deadline.",
+        "type": "behavioral",
+        "difficulty": "entry",
+        "key_points": ["Identified learning resources", "Broke down learning into small chunks", "Applied while learning", "Met the deadline"]
+      },
+      {
+        "question": "Give an example of a time you improved the performance of an existing system.",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Identified the bottleneck", "Measured before and after", "Specific optimisation applied", "Quantified improvement"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "Your code review reveals a major flaw in a feature that ships in 2 hours. What do you do?",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Immediately inform team lead", "Assess severity and scope", "Decide: delay or hotfix", "Communicate transparently"]
+      },
+      {
+        "question": "You are assigned a task with unclear requirements. How do you proceed?",
+        "type": "situational",
+        "difficulty": "entry",
+        "key_points": ["Ask clarifying questions", "Document assumptions", "Build the simplest version first", "Get early feedback before going deep"]
+      },
+      {
+        "question": "A junior developer on your team keeps submitting low-quality code. How would you handle this?",
+        "type": "situational",
+        "difficulty": "senior",
+        "key_points": ["Private constructive feedback", "Pair programming or mentoring", "Set clear quality expectations", "Recognise improvement"]
+      }
+    ]
+  },
+
+  "frontend": {
+    "technical": [
+      {
+        "question": "What is the difference between == and === in JavaScript?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["== does type coercion", "=== checks type and value", "Always prefer === in practice", "Example: 0 == false is true but 0 === false is false"]
+      },
+      {
+        "question": "Explain the concept of the virtual DOM in React. Why does it exist?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["In-memory representation of real DOM", "Reconciliation algorithm diffs changes", "Batches updates for performance", "Minimises expensive real DOM operations"]
+      },
+      {
+        "question": "What is CSS specificity and how is it calculated?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Inline styles > IDs > classes > elements", "Specificity score: 1000 100 10 1", "!important overrides all", "Later rules win if specificity is equal"]
+      },
+      {
+        "question": "Explain event delegation in JavaScript with an example.",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Attach one listener to parent instead of each child", "Uses event bubbling", "Efficient for dynamic lists", "Check event.target to identify the element"]
+      },
+      {
+        "question": "What are React hooks? Explain useState and useEffect.",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Hooks let functional components use state and lifecycle", "useState returns state value and setter", "useEffect runs after render for side effects", "Dependency array controls when effect re-runs"]
+      },
+      {
+        "question": "What is CORS and how do you handle it in a frontend application?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Cross-Origin Resource Sharing", "Browser security policy", "Server sets Access-Control-Allow-Origin header", "Preflight OPTIONS request for complex requests"]
+      },
+      {
+        "question": "How would you optimise the performance of a slow React application?",
+        "type": "technical",
+        "difficulty": "senior",
+        "key_points": ["React.memo to prevent unnecessary re-renders", "useMemo and useCallback for expensive computations", "Code splitting with lazy and Suspense", "Virtualise long lists with react-window"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Describe a UI feature you built that you are most proud of. What made it challenging?",
+        "type": "behavioral",
+        "difficulty": "entry",
+        "key_points": ["Specific feature described", "Technical challenge explained", "How you solved it", "User impact or feedback"]
+      },
+      {
+        "question": "Tell me about a time you had to make a complex UI accessible. What steps did you take?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["ARIA labels and roles used", "Keyboard navigation tested", "Screen reader tested", "WCAG guidelines followed"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "A designer hands you a mockup that is technically very difficult to implement exactly. How do you handle it?",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Discuss trade-offs with designer", "Propose feasible alternative", "Estimate implementation cost", "Agree on best compromise"]
+      },
+      {
+        "question": "Your page loads slowly on mobile. Walk me through how you would diagnose and fix it.",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Use Lighthouse or DevTools", "Check network waterfall for large assets", "Defer non-critical JS and CSS", "Optimise images and use lazy loading"]
+      }
+    ]
+  },
+
+  "backend": {
+    "technical": [
+      {
+        "question": "What is the difference between authentication and authorisation?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Authentication: verifying identity (who you are)", "Authorisation: verifying permissions (what you can do)", "JWT is commonly used for authentication", "RBAC for authorisation"]
+      },
+      {
+        "question": "Explain database indexing. When would you add an index and when would you not?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Index speeds up reads", "Slows down writes due to index maintenance", "Use on frequently queried columns", "Avoid on columns with high write frequency or low cardinality"]
+      },
+      {
+        "question": "What is connection pooling and why is it important in a backend service?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Reuses database connections instead of creating new ones", "Reduces connection overhead", "Controls max concurrent connections", "Prevents database from being overwhelmed"]
+      },
+      {
+        "question": "Explain the difference between synchronous and asynchronous programming. Give a backend example.",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Sync blocks execution until done", "Async allows other work while waiting", "Async/await or callbacks in Node.js", "Useful for I/O bound tasks like DB calls or API requests"]
+      },
+      {
+        "question": "How would you design a rate limiter for an API?",
+        "type": "technical",
+        "difficulty": "senior",
+        "key_points": ["Token bucket or sliding window algorithm", "Store state in Redis for distributed systems", "Return 429 Too Many Requests", "Apply per user or per IP"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Tell me about a time you optimised a slow database query. What was your process?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Identified slow query using EXPLAIN or logs", "Added index or rewrote query", "Measured improvement", "Prevented future regressions"]
+      },
+      {
+        "question": "Describe a situation where you had to design an API consumed by multiple clients.",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Versioning strategy used", "Contract agreed with consumers", "Documentation provided", "Breaking changes handled carefully"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "Your API is returning 500 errors in production for 10% of requests. How do you investigate?",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Check error logs immediately", "Identify pattern in failing requests", "Reproduce locally if possible", "Deploy fix and monitor"]
+      },
+      {
+        "question": "A third-party API your service depends on goes down. How do you handle it?",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Circuit breaker pattern", "Fallback response or cached data", "Alert team and monitor status page", "Graceful degradation for users"]
+      }
+    ]
+  },
+
+  "devops": {
+    "technical": [
+      {
+        "question": "What is the difference between Docker and a virtual machine?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Containers share host OS kernel", "VMs have their own OS", "Containers are lighter and faster to start", "VMs provide stronger isolation"]
+      },
+      {
+        "question": "Explain the CI/CD pipeline. What happens at each stage?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["CI: code pushed triggers build and tests", "CD: automated deployment to staging or production", "Stages: build test scan deploy", "Rollback strategy if deployment fails"]
+      },
+      {
+        "question": "What is Kubernetes and what problem does it solve?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Container orchestration platform", "Handles scaling load balancing self-healing", "Pods nodes and clusters", "Replaces manual container management"]
+      },
+      {
+        "question": "What is Infrastructure as Code (IaC)? Name a tool and explain how you have used it.",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Manage infrastructure via code not manual steps", "Terraform Ansible CloudFormation", "Version controlled reproducible environments", "Prevents configuration drift"]
+      },
+      {
+        "question": "How would you monitor a production application? What metrics would you track?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["CPU memory disk and network usage", "Request latency and error rate", "Application logs centralised", "Alerting on SLA breaches"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Tell me about a production incident you handled. What was your role and what did you learn?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Incident severity and impact described", "Steps taken to resolve", "Communication to stakeholders", "Post-mortem and prevention"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "A deployment just went out and error rates spiked to 40%. What do you do in the first 5 minutes?",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Rollback the deployment immediately", "Check logs for error type", "Notify team and stakeholders", "Do not push more changes until stable"]
+      },
+      {
+        "question": "Your team wants to migrate from monolith to microservices. What risks and steps would you consider?",
+        "type": "situational",
+        "difficulty": "senior",
+        "key_points": ["Strangler fig pattern for gradual migration", "Define service boundaries carefully", "Network latency and distributed tracing", "Data ownership per service"]
+      }
+    ]
+  },
+
+  "cybersec": {
+    "technical": [
+      {
+        "question": "What is the difference between symmetric and asymmetric encryption? Give an example of each.",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Symmetric uses same key for encrypt and decrypt: AES", "Asymmetric uses public/private key pair: RSA", "Symmetric is faster", "Asymmetric used for key exchange like in TLS"]
+      },
+      {
+        "question": "Explain what a SQL injection attack is and how you prevent it.",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Attacker injects SQL through user input", "Can read modify or delete database data", "Prevention: parameterised queries / prepared statements", "Input validation and least privilege DB access"]
+      },
+      {
+        "question": "What is the OWASP Top 10? Name at least 3 vulnerabilities from it.",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Injection (SQL XSS)", "Broken authentication", "Security misconfiguration", "Insecure direct object references", "Sensitive data exposure"]
+      },
+      {
+        "question": "What is a man-in-the-middle attack and how do you defend against it?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Attacker intercepts communication between two parties", "Can read or modify data in transit", "Defence: TLS/HTTPS certificate pinning", "Use strong authentication"]
+      },
+      {
+        "question": "What is the difference between IDS and IPS?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["IDS: Intrusion Detection System — monitors and alerts", "IPS: Intrusion Prevention System — blocks threats in real time", "IDS is passive IPS is active", "IPS sits inline in network traffic path"]
+      },
+      {
+        "question": "Explain how a buffer overflow attack works.",
+        "type": "technical",
+        "difficulty": "senior",
+        "key_points": ["Writing data beyond allocated buffer boundary", "Overwrites adjacent memory including return address", "Attacker redirects execution to malicious code", "Prevention: bounds checking ASLR stack canaries"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Describe a time you identified a security vulnerability in a system. What did you do?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["How vulnerability was discovered", "Reported through proper channels", "Steps to remediate", "Lessons learned and process improvement"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "You discover an employee has been accessing files outside their role. How do you handle it?",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Document evidence before acting", "Escalate to manager and HR", "Revoke excess access immediately", "Follow incident response procedure"]
+      },
+      {
+        "question": "Your company's website is experiencing a DDoS attack. Walk through your response.",
+        "type": "situational",
+        "difficulty": "senior",
+        "key_points": ["Activate DDoS mitigation service (Cloudflare etc.)", "Block malicious IP ranges", "Scale up or enable rate limiting", "Communicate status to stakeholders"]
+      }
+    ]
+  },
+
+  "ml": {
+    "technical": [
+      {
+        "question": "What is the difference between supervised, unsupervised, and reinforcement learning?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Supervised: labelled data, predict output", "Unsupervised: no labels, find patterns (clustering)", "Reinforcement: agent learns from reward/penalty", "Examples: classification, k-means, game playing"]
+      },
+      {
+        "question": "What is overfitting? How do you detect and prevent it?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Model memorises training data, fails on new data", "Detect: high train accuracy low validation accuracy", "Prevention: regularisation dropout cross-validation", "More training data also helps"]
+      },
+      {
+        "question": "Explain the bias-variance trade-off.",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["High bias: underfitting, model too simple", "High variance: overfitting, model too complex", "Goal: minimise both for good generalisation", "Regularisation reduces variance, increasing bias slightly"]
+      },
+      {
+        "question": "What is the purpose of a train-validation-test split? Why not just use train and test?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Train: fit the model", "Validation: tune hyperparameters", "Test: final unbiased evaluation", "Using test for tuning causes data leakage"]
+      },
+      {
+        "question": "How does backpropagation work in a neural network?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Compute loss on forward pass", "Calculate gradient of loss with respect to weights using chain rule", "Update weights in direction that reduces loss", "Repeat for many epochs"]
+      },
+      {
+        "question": "What is attention mechanism in transformers and why was it a breakthrough?",
+        "type": "technical",
+        "difficulty": "senior",
+        "key_points": ["Allows model to weigh importance of each token relative to others", "Replaces sequential RNN with parallel computation", "Self-attention captures long-range dependencies", "Foundation of BERT GPT and modern LLMs"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Tell me about an ML project you built end-to-end. What was the hardest part?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Problem statement and data source", "Model selection and training", "Evaluation metrics used", "Deployment or practical outcome"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "Your model performs well in testing but poorly in production. What could be the reasons?",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Training-serving data distribution skew", "Data leakage in training pipeline", "Concept drift over time", "Feature engineering not applied consistently"]
+      }
+    ]
+  },
+
+  "da": {
+    "technical": [
+      {
+        "question": "What is the difference between INNER JOIN, LEFT JOIN, and FULL OUTER JOIN?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["INNER JOIN returns only matching rows", "LEFT JOIN returns all left rows plus matches from right", "FULL OUTER JOIN returns all rows from both tables", "Unmatched rows get NULL values"]
+      },
+      {
+        "question": "How would you find duplicate records in a SQL table?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["GROUP BY the duplicate column", "HAVING COUNT(*) > 1", "Can use ROW_NUMBER() window function", "Remove duplicates with DELETE using CTE"]
+      },
+      {
+        "question": "What is a window function in SQL? Give an example.",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Performs calculation across related rows without collapsing them", "ROW_NUMBER RANK LAG LEAD SUM OVER", "PARTITION BY defines the window", "Does not reduce rows like GROUP BY"]
+      },
+      {
+        "question": "Explain the difference between OLTP and OLAP systems.",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["OLTP: transactional fast row-level operations", "OLAP: analytical large aggregations", "OLTP normalised OLAP denormalised (star schema)", "Examples: MySQL vs Redshift BigQuery"]
+      },
+      {
+        "question": "What is a cohort analysis and when would you use it?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Groups users by a shared characteristic at a point in time", "Tracks behaviour over time", "Common for retention and churn analysis", "Example: users who signed up in January — how many active after 30 60 90 days"]
+      },
+      {
+        "question": "How do you handle missing values in a dataset?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Understand why data is missing (MCAR MAR MNAR)", "Drop rows if few missing", "Impute with mean median mode or model", "Flag as a separate category for categorical data"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Tell me about an insight you found in data that drove a business decision.",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Context of the problem", "How you analysed the data", "The insight discovered", "Business action taken and outcome"]
+      },
+      {
+        "question": "Describe a time a stakeholder disagreed with your analysis. How did you handle it?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Listened to their perspective", "Re-examined assumptions", "Backed findings with data", "Communicated clearly and found common ground"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "You receive a dataset with 30% missing values in a key column. How do you proceed?",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Investigate why data is missing", "Check if missingness is random or systematic", "Decide between imputation or exclusion based on context", "Document the decision and its impact on analysis"]
+      },
+      {
+        "question": "A business team asks for a dashboard but has no clear metric in mind. How do you approach this?",
+        "type": "situational",
+        "difficulty": "entry",
+        "key_points": ["Ask what decision the dashboard should support", "Identify KPIs tied to business goals", "Build a prototype and get feedback early", "Avoid adding too many metrics at once"]
+      }
+    ]
+  },
+
+  "ds": {
+    "technical": [
+      {
+        "question": "What is the difference between precision and recall? When would you prioritise one over the other?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Precision: of all predicted positive how many are actually positive", "Recall: of all actual positive how many did we catch", "Prioritise recall when false negatives are costly (disease detection)", "Prioritise precision when false positives are costly (spam filter)"]
+      },
+      {
+        "question": "Explain p-value in simple terms. What does p < 0.05 mean?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Probability of observing result if null hypothesis is true", "p < 0.05 means less than 5% chance result is due to chance", "Does not prove causation", "Significance level is chosen before the test"]
+      },
+      {
+        "question": "What is the difference between bagging and boosting?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Bagging: train models in parallel on random subsets (Random Forest)", "Boosting: train models sequentially each correcting previous errors (XGBoost)", "Bagging reduces variance", "Boosting reduces bias"]
+      },
+      {
+        "question": "How would you explain a machine learning model's prediction to a non-technical stakeholder?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Use SHAP or LIME for feature importance", "Translate feature weights into business language", "Focus on top 3 factors that influenced the prediction", "Use analogies and visuals"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Describe a project where your model did not perform as expected. What did you learn?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Honest account of what went wrong", "Debugging process described", "Changes made to improve", "Key takeaway and how you applied it later"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "You have limited labelled data for a classification task. What approaches would you consider?",
+        "type": "situational",
+        "difficulty": "senior",
+        "key_points": ["Transfer learning with pre-trained models", "Semi-supervised learning", "Data augmentation", "Active learning to label most informative samples"]
+      }
+    ]
+  },
+
+  "de": {
+    "technical": [
+      {
+        "question": "What is the difference between a data warehouse and a data lake?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Data warehouse: structured processed data for analytics", "Data lake: raw data in any format", "Warehouse: schema-on-write, Lake: schema-on-read", "Examples: Redshift vs S3/Databricks"]
+      },
+      {
+        "question": "Explain what ETL means and describe each step.",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Extract: pull data from source systems", "Transform: clean enrich and reshape data", "Load: write to destination data store", "ELT is a modern variant where transform happens after loading"]
+      },
+      {
+        "question": "What is Apache Spark and what problem does it solve compared to Hadoop MapReduce?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["In-memory processing vs disk-based MapReduce", "Much faster for iterative algorithms", "Supports batch and streaming", "Unified API for SQL ML streaming graph"]
+      },
+      {
+        "question": "How do you handle late-arriving data in a streaming pipeline?",
+        "type": "technical",
+        "difficulty": "senior",
+        "key_points": ["Watermarking to define how late data can arrive", "Event time vs processing time distinction", "Windowing strategies: tumbling sliding session", "Upsert or reprocess affected windows"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Tell me about a data pipeline you built. What was the biggest engineering challenge?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Source and destination systems described", "Volume and frequency of data", "Challenge: reliability latency or data quality", "How you solved it and monitored it"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "Your pipeline has been silently producing incorrect data for 3 days. How do you handle it?",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Identify scope of bad data", "Notify downstream consumers immediately", "Fix pipeline and validate fix", "Backfill correct data and add data quality checks"]
+      }
+    ]
+  },
+
+  "hr": {
+    "technical": [
+      {
+        "question": "What is the difference between recruitment and talent acquisition?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Recruitment: filling immediate vacancies", "Talent acquisition: long-term strategic hiring", "TA includes employer branding and pipeline building", "TA is proactive recruitment is reactive"]
+      },
+      {
+        "question": "What is an Employee Value Proposition (EVP) and why does it matter?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["What the company offers employees in exchange for their skills", "Includes culture growth compensation and benefits", "Differentiates employer brand", "Directly impacts hiring and retention quality"]
+      },
+      {
+        "question": "Explain the difference between performance management and performance appraisal.",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Performance management: ongoing continuous process", "Performance appraisal: periodic formal review", "Management includes goal-setting feedback coaching", "Appraisal is one component of management"]
+      },
+      {
+        "question": "What are the key components of a good onboarding programme?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Pre-boarding before day one", "Role clarity and goal-setting in first 30 days", "Cultural and team integration", "Feedback checkpoints at 30 60 90 days"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Tell me about a time you had to handle a sensitive employee complaint. How did you manage it?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Maintained confidentiality", "Followed company policy and procedure", "Acted impartially", "Resolved fairly and documented outcome"]
+      },
+      {
+        "question": "Describe a situation where you had to convince a hiring manager to change their selection criteria.",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Identified bias or unrealistic criteria", "Used data or market benchmarks", "Had a constructive conversation", "Outcome: better or fairer hiring"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "A high-performing employee comes to you saying they are unhappy and considering leaving. What do you do?",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Listen actively without interrupting", "Identify root cause: compensation, growth, manager, culture", "Discuss options: role change, raise, project shift", "Follow up with concrete action"]
+      },
+      {
+        "question": "You need to lay off 10% of the workforce. How do you approach the process humanely?",
+        "type": "situational",
+        "difficulty": "senior",
+        "key_points": ["Define objective selection criteria", "Ensure legal compliance and documentation", "Communicate clearly and privately to each person", "Offer severance outplacement support and references"]
+      }
+    ]
+  },
+
+  "pm": {
+    "technical": [
+      {
+        "question": "What is the difference between a product roadmap and a product backlog?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Roadmap: high-level strategic plan over time", "Backlog: prioritised list of features and tasks", "Roadmap communicates direction to stakeholders", "Backlog is for the development team's day-to-day work"]
+      },
+      {
+        "question": "How do you decide which feature to build next?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Use a prioritisation framework: RICE ICE MoSCoW", "Consider business value customer impact and effort", "Validate with user research and data", "Align with company strategy"]
+      },
+      {
+        "question": "What is a North Star Metric and how do you choose one?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Single metric that best captures core product value delivered to users", "Aligns entire team around one goal", "Should correlate with long-term revenue", "Example: Spotify = time spent listening"]
+      },
+      {
+        "question": "How do you write a good user story?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Format: As a [user] I want [goal] so that [benefit]", "Includes acceptance criteria", "Small enough to complete in one sprint", "Focuses on user need not implementation"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Tell me about a product feature that failed. What did you learn?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Honest description of what went wrong", "User research or assumptions that were wrong", "How you identified the failure", "What you did differently next time"]
+      },
+      {
+        "question": "Describe a time you had to say no to a stakeholder request. How did you handle it?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Explained the reasoning with data", "Offered an alternative or later timeline", "Maintained the relationship", "Stakeholder understood and accepted"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "Engineering says a feature will take 3 months. Business wants it in 3 weeks. What do you do?",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Understand what business truly needs vs wants", "Explore MVP that delivers core value faster", "Facilitate honest conversation between both sides", "Set realistic expectations and document trade-offs"]
+      }
+    ]
+  },
+
+  "marketing": {
+    "technical": [
+      {
+        "question": "What is the difference between SEO and SEM?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["SEO: organic search ranking through content and backlinks", "SEM: paid search advertising (Google Ads)", "SEO is long-term SEM is immediate", "Both aim to increase search visibility"]
+      },
+      {
+        "question": "What is a conversion funnel and what are the typical stages?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Awareness Interest Desire Action (AIDA)", "Top of funnel: reach and brand awareness", "Middle: consideration and engagement", "Bottom: conversion and retention"]
+      },
+      {
+        "question": "How would you measure the success of a marketing campaign?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Define KPIs before the campaign: CTR conversion rate CAC ROAS", "Track attribution properly (UTM parameters)", "Compare to baseline or control group", "Measure short-term conversions and long-term brand lift"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Tell me about a campaign you ran that exceeded expectations. What drove the success?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Campaign objective and channel described", "Specific actions taken", "Metrics achieved vs target", "Key factor that drove success"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "Your ad campaign is spending budget but not converting. What do you investigate first?",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Check landing page relevance and load speed", "Review audience targeting", "Analyse ad creative and copy", "Check the offer or CTA"]
+      }
+    ]
+  },
+
+  "ba": {
+    "technical": [
+      {
+        "question": "What is a BRD and what does it contain?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Business Requirements Document", "Business objectives and scope", "Stakeholder list and functional requirements", "Assumptions constraints and sign-off"]
+      },
+      {
+        "question": "What is the difference between functional and non-functional requirements?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Functional: what the system should do (features behaviour)", "Non-functional: how the system should perform (speed security scalability)", "Both are required for complete requirements", "Example: login feature vs login must respond in under 2 seconds"]
+      },
+      {
+        "question": "What is a use case diagram and when would you use it?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["UML diagram showing actors and system interactions", "Visualises who does what with the system", "Used in early requirements phase", "Helps identify scope and missing requirements"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Tell me about a time requirements changed midway through a project. How did you manage it?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Assessed impact on scope timeline and cost", "Communicated change to all stakeholders", "Updated documentation", "Got formal sign-off before implementation"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "Two stakeholders have conflicting requirements for the same feature. How do you resolve it?",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Bring both stakeholders together", "Focus on underlying business need not positions", "Facilitate prioritisation discussion", "Escalate if needed with a documented recommendation"]
+      }
+    ]
+  },
+
+  "finance": {
+    "technical": [
+      {
+        "question": "What is the difference between revenue, profit, and cash flow?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Revenue: total income from sales", "Profit: revenue minus costs", "Cash flow: actual cash moving in and out", "A company can be profitable but cash flow negative"]
+      },
+      {
+        "question": "Explain DCF (Discounted Cash Flow) valuation in simple terms.",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Estimates present value of future cash flows", "Uses a discount rate (WACC)", "Sum of discounted future cash flows minus debt", "Sensitive to assumptions about growth and discount rate"]
+      },
+      {
+        "question": "What is EBITDA and why is it used?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Earnings Before Interest Taxes Depreciation Amortisation", "Proxy for operating cash flow", "Used to compare companies regardless of financing or accounting", "Does not account for capital expenditure"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Tell me about a financial model you built. What was the most complex part?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Purpose and scope of the model", "Data sources and assumptions", "Most complex formula or logic", "How it was used to drive a decision"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "You find a significant error in a financial report that has already been sent to leadership. What do you do?",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Verify the error is real", "Inform your manager immediately", "Prepare a corrected version with explanation", "Be transparent about impact and cause"]
+      }
+    ]
+  },
+
+  "ux": {
+    "technical": [
+      {
+        "question": "What is the difference between UX and UI design?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["UX: the overall experience and journey of the user", "UI: the visual look and interactive elements", "UX is research-driven UI is execution", "Good UI can still have bad UX and vice versa"]
+      },
+      {
+        "question": "What is a usability test and how do you conduct one?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Observe real users completing tasks", "5 users can reveal ~85% of usability issues", "Think-aloud protocol", "Note failures confusion and time taken"]
+      },
+      {
+        "question": "Explain the double diamond design process.",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Discover: research and understand the problem space", "Define: narrow down to the core problem", "Develop: generate and prototype many ideas", "Deliver: test and refine the best solution"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Tell me about a design decision you made based on user research that surprised you.",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Research method used", "Unexpected insight found", "How it changed the design", "Impact on the user experience"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "A developer says your design is too complex to build in time. How do you respond?",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Understand the specific constraint", "Identify which parts of the design are non-negotiable for UX", "Propose a simplified version that preserves core usability", "Agree to revisit full design in next iteration"]
+      }
+    ]
+  },
+
+  "sales": {
+    "technical": [
+      {
+        "question": "What is the difference between a lead, a prospect, and an opportunity?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Lead: someone who has shown interest but not qualified", "Prospect: qualified lead who fits ideal customer profile", "Opportunity: prospect actively considering buying", "Stages in a CRM sales pipeline"]
+      },
+      {
+        "question": "What is SPIN selling and when would you apply it?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Situation Problem Implication Need-Payoff", "Used for complex B2B sales", "Uncovers pain before pitching", "Helps customer articulate their own need"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Tell me about your biggest sales win. What did you do to close it?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Deal size and complexity", "How you built trust with the buyer", "Obstacles overcome", "What closed the deal"]
+      },
+      {
+        "question": "Describe a time you lost a deal. What did you learn?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Honest reflection on what went wrong", "What you would do differently", "How you applied the lesson", "Maintained relationship despite losing"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "A prospect goes silent after a promising demo. How do you re-engage them?",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Send a value-add follow-up not just a check-in", "Reference specific pain point from the demo", "Try a different channel", "Know when to move on vs persist"]
+      }
+    ]
+  },
+
+  "content": {
+    "technical": [
+      {
+        "question": "What is keyword intent and why does it matter for content strategy?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Intent: informational navigational transactional commercial", "Matching content type to intent improves ranking", "Transactional intent: product pages", "Informational intent: blog posts and guides"]
+      },
+      {
+        "question": "What is the difference between on-page and off-page SEO?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["On-page: title tags headers content keyword usage", "Off-page: backlinks domain authority social signals", "On-page you control directly", "Off-page depends on external sites linking to you"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Tell me about a piece of content you created that performed really well. Why do you think it worked?",
+        "type": "behavioral",
+        "difficulty": "entry",
+        "key_points": ["Content type and topic", "Target audience and distribution channel", "Metrics: traffic shares conversions", "Key factor: angle research format or timing"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "You have to write about a technical topic you know nothing about. How do you approach it?",
+        "type": "situational",
+        "difficulty": "entry",
+        "key_points": ["Read 5-10 authoritative sources first", "Interview a subject matter expert if possible", "Use simple language and analogies", "Get a technical review before publishing"]
+      }
+    ]
+  },
+
+  "mobile": {
+    "technical": [
+      {
+        "question": "What is the difference between native, hybrid, and cross-platform mobile development?",
+        "type": "technical",
+        "difficulty": "entry",
+        "key_points": ["Native: Swift/Kotlin for best performance but two codebases", "Hybrid: web inside WebView (Ionic)", "Cross-platform: one codebase compiles to native (Flutter React Native)", "Trade-off: performance vs development speed"]
+      },
+      {
+        "question": "What is the activity lifecycle in Android or view controller lifecycle in iOS?",
+        "type": "technical",
+        "difficulty": "mid",
+        "key_points": ["Android: onCreate onStart onResume onPause onStop onDestroy", "iOS: viewDidLoad viewWillAppear viewDidAppear viewWillDisappear", "Understand when to load data and release resources", "Memory leaks often caused by ignoring lifecycle"]
+      },
+      {
+        "question": "How do you handle background tasks on mobile without draining the battery?",
+        "type": "technical",
+        "difficulty": "senior",
+        "key_points": ["Use platform-native APIs: WorkManager Android, BGTaskScheduler iOS", "Avoid wake locks and excessive polling", "Batch network requests", "Test with battery profiler"]
+      }
+    ],
+    "behavioral": [
+      {
+        "question": "Tell me about a mobile app feature you built. What was the trickiest part?",
+        "type": "behavioral",
+        "difficulty": "mid",
+        "key_points": ["Feature described clearly", "Platform-specific challenge mentioned", "How you solved it", "User experience outcome"]
+      }
+    ],
+    "situational": [
+      {
+        "question": "Your app crashes only on a specific device model you don't own. How do you debug it?",
+        "type": "situational",
+        "difficulty": "mid",
+        "key_points": ["Use crash reporting tools: Firebase Crashlytics Sentry", "Reproduce with emulator matching OS and screen size", "Check device-specific APIs or screen densities", "Ask a user for logs or beta access to their device"]
+      }
+    ]
+  }
+}

@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PrepAI — Interview Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #171717;
+    --surface:  #383a42;
+    --border:   #2a2d33;
+    --border2:  #3a3e47;
+    --text:     #86868a;
+    --muted:    #7a7f8a;
+    --accent:   #c8f060;
+    --accent2:  #7af0c8;
+    --danger:   #f06060;
+    --warn:     #f0b060;
+    --radius:   12px;
+    --radius-sm:7px;
+    font-size: 15px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  h1,h2,h3 { font-family: 'DM Serif Display', serif; font-weight: 400; line-height: 1.2; }
+
+  .shell { max-width: 760px; margin: 0 auto; padding: 0 20px 80px; }
+
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem; letter-spacing: -0.5px;
+    color: var(--text); display: flex; align-items: center; gap: 8px;
+  }
+
+  .logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); display: inline-block; }
+
+  /* screens */
+  .screen { display: none; animation: fadeUp 0.3s ease; }
+  .screen.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* typography */
+  .label {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted);
+    display: block; margin-bottom: 10px;
+  }
+
+  .page-title { font-size: 2.2rem; margin-bottom: 10px; color: var(--text); }
+  .page-sub   { color: var(--muted); margin-bottom: 36px; font-size: 0.95rem; }
+
+  /* buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 22px; border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; font-weight: 500;
+    cursor: pointer; border: none;
+    transition: all 0.15s ease; text-decoration: none;
+  }
+
+  .btn-primary { background: var(--accent); color: #0e0f11; }
+  .btn-primary:hover { background: #d8ff70; transform: translateY(-1px); }
+
+  .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border2); }
+  .btn-ghost:hover { border-color: var(--text); background: rgba(255,255,255,0.04); }
+
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+  /* cards */
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 24px; margin-bottom: 12px;
+  }
+
+  /* form */
+  textarea, input[type="text"] {
+    width: 100%; background: var(--surface);
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    color: var(--text); font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; padding: 14px 16px; resize: vertical;
+    transition: border-color 0.15s; outline: none; line-height: 1.6;
+  }
+
+  textarea:focus, input:focus { border-color: var(--accent); }
+  textarea::placeholder, input::placeholder { color: var(--muted); }
+
+  /* tabs */
+  .tabs {
+    display: flex; gap: 4px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 4px; margin-bottom: 20px; width: fit-content;
+  }
+
+  .tab {
+    padding: 7px 16px; border-radius: 5px;
+    font-size: 0.85rem; font-weight: 500; cursor: pointer; border: none;
+    background: transparent; color: var(--muted);
+    font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+  }
+
+  .tab.active { background: var(--accent); color: #0e0f11; }
+  .tab:not(.active):hover { color: var(--text); }
+
+  /* role grid */
+  .role-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px; margin-bottom: 28px;
+  }
+
+  .role-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px 16px;
+    cursor: pointer; transition: all 0.15s; text-align: center;
+  }
+
+  .role-card:hover { border-color: var(--border2); transform: translateY(-2px); background: #1c1f25; }
+  .role-card.selected { border-color: var(--accent); background: rgba(200,240,96,0.06); }
+  .role-card .ri { font-size: 1.6rem; margin-bottom: 8px; display: block; }
+  .role-card .rn { font-size: 0.85rem; font-weight: 500; color: var(--text); }
+  .role-card .rc { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+
+  /* badges */
+  .badge { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 0.72rem; font-weight: 500; }
+  .badge-green  { background: rgba(122,240,200,0.12); color: var(--accent2); }
+  .badge-yellow { background: rgba(200,240,96,0.12);  color: var(--accent);  }
+  .badge-red    { background: rgba(240,96,96,0.12);   color: var(--danger);  }
+  .badge-gray   { background: rgba(255,255,255,0.06); color: var(--muted);   }
+  .badge-warn   { background: rgba(240,176,96,0.12);  color: var(--warn);    }
+
+  /* detected role box */
+  .detected-box {
+    border: 1px solid var(--accent); background: rgba(200,240,96,0.05);
+    border-radius: var(--radius); padding: 18px 22px; margin: 20px 0; display: none;
+  }
+  .detected-box.visible { display: block; animation: fadeUp 0.3s ease; }
+  .detected-role-name { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--accent); margin-bottom: 6px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+
+  /* session screen */
+  .q-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+  .q-progress-bar { height: 3px; background: var(--border); border-radius: 2px; margin-bottom: 28px; overflow: hidden; }
+  .q-progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+  .q-number { font-size: 0.8rem; color: var(--muted); }
+
+  .question-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem; line-height: 1.4;
+    margin-bottom: 8px; color: var(--text);
+  }
+
+  /* read aloud button */
+  .speak-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: transparent; border: none;
+    color: var(--muted); font-size: 0.8rem; cursor: pointer;
+    padding: 4px 0; margin-bottom: 22px;
+    font-family: 'DM Sans', sans-serif; transition: color 0.15s;
+  }
+  .speak-btn:hover   { color: var(--accent2); }
+  .speak-btn.active  { color: var(--accent2); }
+
+  /* answer area */
+  .answer-wrap { position: relative; }
+  .answer-wrap textarea { padding-right: 54px; }
+
+  /* mic button — sits inside bottom-right of textarea */
+  .mic-btn {
+    position: absolute; right: 10px; bottom: 10px;
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1.5px solid var(--border2);
+    background: var(--bg);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; transition: all 0.15s; z-index: 2;
+  }
+  .mic-btn:hover { border-color: var(--accent); background: rgba(200,240,96,0.08); }
+  .mic-btn.listening {
+    border-color: var(--danger); background: rgba(240,96,96,0.12);
+    animation: pulse-ring 1s ease-in-out infinite;
+  }
+
+  @keyframes pulse-ring {
+    0%   { box-shadow: 0 0 0 0   rgba(240,96,96,0.45); }
+    70%  { box-shadow: 0 0 0 8px rgba(240,96,96,0);    }
+    100% { box-shadow: 0 0 0 0   rgba(240,96,96,0);    }
+  }
+
+  /* voice status row below textarea */
+  .voice-row { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; min-height: 20px; }
+  .char-count { font-size: 0.75rem; color: var(--muted); }
+  .voice-status { font-size: 0.75rem; color: var(--muted); text-align: right; transition: color 0.2s; }
+  .voice-status.listening { color: var(--danger); }
+  .voice-status.done      { color: var(--accent2); }
+
+  /* live interim words shown below */
+  .interim-text {
+    font-size: 0.82rem; color: var(--muted); font-style: italic;
+    min-height: 20px; margin-top: 4px; padding-left: 2px;
+  }
+
+  /* hint */
+  .hint-box {
+    background: rgba(122,240,200,0.05); border: 1px solid rgba(122,240,200,0.2);
+    border-radius: var(--radius-sm); padding: 14px 16px;
+    margin-top: 16px; font-size: 0.87rem; color: var(--accent2); display: none;
+  }
+  .hint-box.visible { display: block; animation: fadeUp 0.2s ease; }
+
+  /* eval card */
+  .eval-card {
+    border-left: 3px solid var(--accent); background: var(--surface);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 16px 20px; margin-top: 20px; display: none;
+  }
+  .eval-card.visible { display: block; animation: fadeUp 0.3s ease; }
+  .eval-score-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .eval-score-big { font-family: 'DM Serif Display', serif; font-size: 2rem; line-height: 1; }
+  .eval-section { margin-top: 14px; }
+  .eval-section-title { font-size: 0.75rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .eval-text { font-size: 0.88rem; color: var(--text); line-height: 1.65; }
+  .missing-list { list-style: none; }
+  .missing-list li { font-size: 0.85rem; color: var(--muted); padding: 3px 0 3px 14px; position: relative; }
+  .missing-list li::before { content: '–'; position: absolute; left: 0; color: var(--danger); }
+
+  /* report */
+  .report-score-hero { text-align: center; padding: 36px 0 28px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+  .report-score-num { font-family: 'DM Serif Display', serif; font-size: 4.5rem; line-height: 1; margin-bottom: 6px; }
+  .report-score-label { color: var(--muted); font-size: 0.9rem; }
+
+  .report-q-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px 22px;
+    margin-bottom: 10px; cursor: pointer; transition: border-color 0.15s;
+  }
+  .report-q-item:hover { border-color: var(--border2); }
+  .report-q-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+  .report-q-text { font-size: 0.9rem; font-weight: 500; color: var(--text); flex: 1; line-height: 1.5; }
+  .report-q-body { display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+  .report-q-body.open { display: block; animation: fadeUp 0.2s ease; }
+  .report-label { font-size: 0.72rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 5px; }
+  .report-value { font-size: 0.88rem; color: var(--text); line-height: 1.6; margin-bottom: 14px; }
+
+  /* score bars */
+  .score-bar-wrap { margin-bottom: 20px; }
+  .score-bar-row  { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .score-bar-label{ font-size: 0.82rem; color: var(--muted); width: 90px; flex-shrink: 0; }
+  .score-bar-bg   { flex: 1; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .score-bar-fill { height: 100%; border-radius: 3px; background: var(--accent); transition: width 0.8s ease; }
+  .score-bar-val  { font-size: 0.82rem; font-weight: 500; color: var(--text); width: 34px; text-align: right; }
+
+  /* loader */
+  .loader {
+    display: inline-block; width: 16px; height: 16px;
+    border: 2px solid rgba(200,240,96,0.3); border-top-color: var(--accent);
+    border-radius: 50%; animation: spin 0.7s linear infinite;
+    vertical-align: middle; margin-right: 6px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* toast */
+  #toast {
+    position: fixed; bottom: 28px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--surface); border: 1px solid var(--border2);
+    border-radius: var(--radius-sm); padding: 10px 20px;
+    font-size: 0.88rem; color: var(--text);
+    opacity: 0; transition: all 0.25s ease;
+    pointer-events: none; white-space: nowrap; z-index: 999;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* misc */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+  .flex-between { display: flex; align-items: center; justify-content: space-between; }
+  .flex-gap     { display: flex; align-items: center; gap: 10px; }
+  .mt-8  { margin-top: 8px; }  .mt-16 { margin-top: 16px; }  .mt-24 { margin-top: 24px; }
+  .mb-8  { margin-bottom: 8px; } .mb-16 { margin-bottom: 16px; }
+  .text-muted { color: var(--muted); } .text-accent { color: var(--accent); } .text-sm { font-size: 0.85rem; }
+
+  /* mode cards */
+  .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 32px; }
+  .mode-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 20px; cursor: pointer; transition: all 0.15s; text-align: center; }
+  .mode-card:hover  { border-color: var(--border2); background: var(--surface); }
+  .mode-card.active { border-color: var(--accent);  background: rgba(200,240,96,0.04); }
+  .mode-card .mi { font-size: 1.8rem; margin-bottom: 10px; }
+  .mode-card .mt-title { font-weight: 500; margin-bottom: 4px; }
+  .mode-card .mt-sub { font-size: 0.82rem; color: var(--muted); }
+
+  /* config row */
+  .config-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .config-opt {
+    padding: 7px 15px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+    font-size: 0.85rem; cursor: pointer; background: transparent; color: var(--muted);
+    font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+  }
+  .config-opt.selected { border-color: var(--accent); color: var(--accent); background: rgba(200,240,96,0.06); }
+  .config-opt:hover:not(.selected) { border-color: var(--border2); color: var(--text); }
+
+  /* q-actions */
+  .q-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo"><span class="logo-dot"></span>PrepAI</div>
+    <div class="flex-gap text-sm text-muted">Interview Prep</div>
+  </header>
+
+  <!-- ══ SCREEN 1 — HOME ══════════════════════════════════════════ -->
+  <div id="screen-home" class="screen active">
+    <span class="label">Prepare smarter</span>
+    <h1 class="page-title">Mock interviews,<br><em>tailored to your role</em></h1>
+    <p class="page-sub">Paste a job description or pick a role. Get real interview questions and AI-powered feedback on your answers.</p>
+
+    <div class="mode-grid">
+      <div class="mode-card active" id="mode-jd" onclick="selectMode('jd')">
+        <div class="mi">📋</div>
+        <div class="mt-title">Paste JD</div>
+        <div class="mt-sub">AI detects your role from the job description</div>
+      </div>
+      <div class="mode-card" id="mode-role" onclick="selectMode('role')">
+        <div class="mi">🎯</div>
+        <div class="mt-title">Pick a Role</div>
+        <div class="mt-sub">Browse from 20+ job roles directly</div>
+      </div>
+    </div>
+
+    <div id="jd-panel">
+      <span class="label">Job Description</span>
+      <textarea id="jd-input" rows="7" placeholder="Paste the job description here…&#10;&#10;e.g. We are looking for a Software Development Engineer with 2+ years of experience in Python, REST APIs, and system design…"></textarea>
+      <div class="detected-box" id="detected-box">
+        <div class="flex-between mb-8">
+          <span class="label" style="margin:0">Detected Role</span>
+          <span id="conf-badge" class="badge badge-green">—</span>
+        </div>
+        <div class="detected-role-name" id="detected-role-name">—</div>
+        <div class="text-sm text-muted" id="detected-seniority"></div>
+        <div class="skill-tags" id="skill-tags"></div>
+      </div>
+      <div class="mt-16">
+        <button class="btn btn-primary" onclick="parseJD()" id="parse-btn">Detect Role</button>
+        <button class="btn btn-ghost" style="margin-left:8px;display:none" onclick="goToConfig()" id="jd-next-btn">Continue →</button>
+      </div>
+    </div>
+
+    <div id="role-panel" style="display:none">
+      <div class="tabs" id="cat-tabs">
+        <button class="tab active" onclick="filterCat('all',this)">All</button>
+        <button class="tab" onclick="filterCat('tech',this)">Tech</button>
+        <button class="tab" onclick="filterCat('data',this)">Data</button>
+        <button class="tab" onclick="filterCat('business',this)">Business</button>
+        <button class="tab" onclick="filterCat('design',this)">Design</button>
+      </div>
+      <div class="role-grid" id="role-grid"></div>
+      <button class="btn btn-primary" onclick="goToConfig()" id="role-next-btn" disabled>Continue →</button>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 2 — CONFIG ════════════════════════════════════════ -->
+  <div id="screen-config" class="screen">
+    <span class="label">Session Setup</span>
+    <h2 class="page-title" style="font-size:1.8rem">Configure your session</h2>
+    <p class="page-sub">Role: <span id="config-role-name" class="text-accent"></span></p>
+
+    <div class="card">
+      <span class="label">Number of Questions</span>
+      <div class="config-row">
+        <button class="config-opt selected" onclick="setCfg('count',5,this)">5 questions</button>
+        <button class="config-opt"          onclick="setCfg('count',10,this)">10 questions</button>
+        <button class="config-opt"          onclick="setCfg('count',15,this)">15 questions</button>
+      </div>
+      <span class="label" style="margin-top:18px">Difficulty</span>
+      <div class="config-row">
+        <button class="config-opt selected" onclick="setCfg('diff','entry',this)">Entry level</button>
+        <button class="config-opt"          onclick="setCfg('diff','mid',this)">Mid level</button>
+        <button class="config-opt"          onclick="setCfg('diff','senior',this)">Senior</button>
+      </div>
+      <span class="label" style="margin-top:18px">Question Types</span>
+      <div class="config-row">
+        <button class="config-opt selected" onclick="toggleType('technical',this)">Technical</button>
+        <button class="config-opt selected" onclick="toggleType('behavioral',this)">Behavioral</button>
+        <button class="config-opt selected" onclick="toggleType('situational',this)">Situational</button>
+      </div>
+    </div>
+
+    <div class="flex-gap mt-16">
+      <button class="btn btn-primary" onclick="startSession()">Start Interview</button>
+      <button class="btn btn-ghost"   onclick="goTo('home')">← Back</button>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 3 — SESSION ═══════════════════════════════════════ -->
+  <div id="screen-session" class="screen">
+
+    <div class="q-meta">
+      <span class="q-number" id="q-number">Question 1 of 5</span>
+      <span id="q-type-badge" class="badge badge-gray">Technical</span>
+    </div>
+
+    <div class="q-progress-bar">
+      <div class="q-progress-fill" id="q-progress-fill" style="width:0%"></div>
+    </div>
+
+    <!-- question + read-aloud button -->
+    <div class="question-text" id="question-text">—</div>
+    <button class="speak-btn" id="speak-btn" onclick="toggleSpeak()">
+      🔊 Read question aloud
+    </button>
+
+    <!-- answer textarea with mic button inside -->
+    <span class="label">Your Answer</span>
+    <div class="answer-wrap">
+      <textarea
+        id="answer-input"
+        rows="6"
+        placeholder="Type your answer here, or tap ၊၊||၊ to speak — words appear here automatically…"
+        oninput="updateCharCount()"
+      ></textarea>
+      <button class="mic-btn" id="mic-btn" onclick="toggleVoice()" title="Tap to start / stop speaking">၊၊||၊</button>
+    </div>
+
+    <!-- char count (left) + voice status (right) -->
+    <div class="voice-row">
+      <div class="char-count" id="char-count">0 characters</div>
+      <div class="voice-status" id="voice-status"></div>
+    </div>
+
+    <!-- live interim speech preview -->
+    <div class="interim-text" id="interim-text"></div>
+
+    <!-- hint -->
+    <div class="hint-box" id="hint-box">
+      <strong style="color:var(--accent2)">Hint:</strong>
+      <span id="hint-text"></span>
+    </div>
+
+    <!-- evaluation result -->
+    <div class="eval-card" id="eval-card">
+      <div class="eval-score-row">
+        <div class="eval-score-big" id="eval-score-num">—</div>
+        <div>
+          <div id="eval-score-badge"></div>
+          <div class="text-sm text-muted mt-8" id="eval-score-sub"></div>
+        </div>
+      </div>
+      <div class="eval-section">
+        <div class="eval-section-title">Feedback</div>
+        <div class="eval-text" id="eval-feedback"></div>
+      </div>
+      <div class="eval-section" id="eval-missing-wrap">
+        <div class="eval-section-title">Key Points Missed</div>
+        <ul class="missing-list" id="eval-missing"></ul>
+      </div>
+      <div class="eval-section">
+        <div class="eval-section-title">Ideal Answer (summary)</div>
+        <div class="eval-text" id="eval-ideal"></div>
+      </div>
+    </div>
+
+    <div class="q-actions">
+      <button class="btn btn-primary" id="submit-btn" onclick="submitAnswer()">Submit Answer</button>
+      <button class="btn btn-ghost"   id="hint-btn"   onclick="showHint()">Show Hint</button>
+      <button class="btn btn-ghost"   id="skip-btn"   onclick="skipQuestion()">Skip</button>
+      <button class="btn btn-primary" id="next-btn"   onclick="nextQuestion()" style="display:none">Next →</button>
+    </div>
+
+  </div>
+
+  <!-- ══ SCREEN 4 — REPORT ════════════════════════════════════════ -->
+  <div id="screen-report" class="screen">
+    <div class="report-score-hero">
+      <span class="label">Session Complete</span>
+      <div class="report-score-num" id="report-score-num">—</div>
+      <div class="report-score-label">Overall Score</div>
+      <div class="flex-gap mt-16" style="justify-content:center">
+        <span id="report-role-badge"  class="badge badge-gray">—</span>
+        <span id="report-count-badge" class="badge badge-gray">—</span>
+      </div>
+    </div>
+    <div class="score-bar-wrap" id="score-bars"></div>
+    <hr class="divider" />
+    <span class="label">Question Breakdown</span>
+    <div id="report-questions"></div>
+    <div class="flex-gap mt-24">
+      <button class="btn btn-primary" onclick="resetApp()">New Session</button>
+    </div>
+  </div>
+
+</div>
+<div id="toast"></div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     JAVASCRIPT
+═════════════════════════════════════════════════════════════════════ -->
+<script>
+
+/* ── Config ────────────────────────────────────────────────────── */
+const API = 'http://localhost:8000';
+
+/* ── App State ─────────────────────────────────────────────────── */
+let state = {
+  mode: 'jd',
+  selectedRole: null,
+  sessionConfig: { count: 5, diff: 'entry', types: ['technical','behavioral','situational'] },
+  questions: [], currentIdx: 0, answers: []
+};
+
+/* ── Roles ─────────────────────────────────────────────────────── */
+const ROLES = [
+  { id:'sde',       name:'SDE',              cat:'tech',     icon:'💻', label:'Software Engg' },
+  { id:'frontend',  name:'Frontend Dev',     cat:'tech',     icon:'🖥️', label:'React / Vue' },
+  { id:'backend',   name:'Backend Dev',      cat:'tech',     icon:'⚙️', label:'APIs / Services' },
+  { id:'devops',    name:'DevOps / Cloud',   cat:'tech',     icon:'☁️', label:'CI/CD, AWS/GCP' },
+  { id:'cybersec',  name:'Cybersecurity',    cat:'tech',     icon:'🔒', label:'Security Analyst' },
+  { id:'ml',        name:'ML / AI Eng',      cat:'tech',     icon:'🤖', label:'Models & Pipelines' },
+  { id:'mobile',    name:'Mobile Dev',       cat:'tech',     icon:'📱', label:'iOS / Android' },
+  { id:'da',        name:'Data Analyst',     cat:'data',     icon:'📊', label:'SQL, Python, BI' },
+  { id:'ds',        name:'Data Scientist',   cat:'data',     icon:'🔬', label:'ML, Statistics' },
+  { id:'de',        name:'Data Engineer',    cat:'data',     icon:'🏗️', label:'Pipelines, ETL' },
+  { id:'ba',        name:'Business Analyst', cat:'business', icon:'📈', label:'Requirements, Docs' },
+  { id:'hr',        name:'HR Manager',       cat:'business', icon:'👥', label:'People & Culture' },
+  { id:'pm',        name:'Product Manager',  cat:'business', icon:'📦', label:'Roadmap, Strategy' },
+  { id:'marketing', name:'Marketing',        cat:'business', icon:'📢', label:'Growth, Campaigns' },
+  { id:'sales',     name:'Sales Executive',  cat:'business', icon:'💼', label:'B2B / B2C' },
+  { id:'finance',   name:'Finance Analyst',  cat:'business', icon:'🏦', label:'FP&A, Modelling' },
+  { id:'ux',        name:'UX / UI Designer', cat:'design',   icon:'🎨', label:'Figma, Research' },
+  { id:'content',   name:'Content Writer',   cat:'design',   icon:'✏️', label:'SEO, Copywriting' },
+];
+
+/* ══════════════════════════════════════════════════════════════════
+   VOICE INPUT — Web Speech API (Chrome only, zero dependencies)
+══════════════════════════════════════════════════════════════════════ */
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition  = null;
+let isListening  = false;
+const voiceOK    = !!SpeechRecognition;
+
+if (voiceOK) {
+  recognition = new SpeechRecognition();
+  recognition.continuous     = true;   // keep going until user taps stop
+  recognition.interimResults = true;   // stream words in real time
+  recognition.lang           = 'en-US';
+
+  /* onresult fires for every word group the browser recognises */
+  recognition.onresult = (e) => {
+    let interim = '';
+    let final   = '';
+
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      const t = e.results[i][0].transcript;
+      if (e.results[i].isFinal) final += t;   // confirmed word(s)
+      else                       interim += t; // still in progress
+    }
+
+    /* Confirmed words → append to textarea */
+    if (final) {
+      const box = document.getElementById('answer-input');
+      const cur = box.value.trim();
+      box.value = cur ? cur + ' ' + final.trim() : final.trim();
+      updateCharCount();
+    }
+
+    /* In-progress words → show below textarea in italic */
+    document.getElementById('interim-text').textContent =
+      interim ? '🎤 ' + interim : '';
+  };
+
+  /* If recognition stops unexpectedly while still "listening", restart */
+  recognition.onend = () => {
+    if (isListening) {
+      try { recognition.start(); }
+      catch(e) { stopListening(); }
+    }
+  };
+
+  recognition.onerror = (e) => {
+    stopListening();
+    const msg = {
+      'not-allowed' : '⚠ Microphone access denied. Allow mic in browser settings.',
+      'no-speech'   : 'No speech detected — try speaking again.',
+      'network'     : 'Network error with speech recognition.',
+      'aborted'     : null,
+    }[e.error];
+    if (msg) showToast(msg);
+  };
+}
+
+function toggleVoice() {
+  if (!voiceOK) { showToast('Voice not supported in this browser. Please use Chrome.'); return; }
+  isListening ? stopListening() : startListening();
+}
+
+function startListening() {
+  try {
+    recognition.start();
+    isListening = true;
+    document.getElementById('mic-btn').classList.add('listening');
+    document.getElementById('mic-btn').textContent     = '⏹';
+    const vs = document.getElementById('voice-status');
+    vs.textContent = '● Listening — speak your answer';
+    vs.className   = 'voice-status listening';
+  } catch(e) {
+    showToast('Could not access microphone.');
+  }
+}
+
+function stopListening() {
+  isListening = false;
+  try { recognition.stop(); } catch(e) {}
+  document.getElementById('mic-btn').classList.remove('listening');
+  document.getElementById('mic-btn').textContent   = '🎤';
+  document.getElementById('interim-text').textContent = '';
+  const hasText = document.getElementById('answer-input').value.trim().length > 0;
+  const vs = document.getElementById('voice-status');
+  vs.textContent = hasText ? '✓ Voice captured — tap mic to add more' : 'Tap mic to speak';
+  vs.className   = 'voice-status ' + (hasText ? 'done' : '');
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   TEXT-TO-SPEECH — reads question aloud
+══════════════════════════════════════════════════════════════════════ */
+function toggleSpeak() {
+  if (!window.speechSynthesis) return;
+  if (window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+    resetSpeakBtn();
+    return;
+  }
+  const text  = document.getElementById('question-text').textContent;
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate  = 0.92;
+  utter.pitch = 1;
+  utter.lang  = 'en-US';
+
+  const voices    = window.speechSynthesis.getVoices();
+  const preferred = voices.find(v =>
+    v.name.toLowerCase().includes('google') ||
+    v.name.toLowerCase().includes('natural') ||
+    (v.lang === 'en-US' && !v.name.toLowerCase().includes('zira'))
+  ) || voices.find(v => v.lang.startsWith('en'));
+  if (preferred) utter.voice = preferred;
+
+  utter.onstart = () => {
+    const b = document.getElementById('speak-btn');
+    b.textContent = '⏹ Stop reading';
+    b.classList.add('active');
+  };
+  utter.onend = resetSpeakBtn;
+  window.speechSynthesis.speak(utter);
+}
+
+function resetSpeakBtn() {
+  const b = document.getElementById('speak-btn');
+  if (!b) return;
+  b.textContent = '🔊 Read question aloud';
+  b.classList.remove('active');
+}
+
+/* auto-read question on render */
+function autoRead(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate  = 0.92; utter.lang = 'en-US';
+  const voices    = window.speechSynthesis.getVoices();
+  const preferred = voices.find(v => v.lang === 'en-US') || voices[0];
+  if (preferred) utter.voice = preferred;
+  utter.onstart = () => { const b = document.getElementById('speak-btn'); if(b){ b.textContent='⏹ Stop reading'; b.classList.add('active'); }};
+  utter.onend   = resetSpeakBtn;
+  window.speechSynthesis.speak(utter);
+}
+
+/* ── Navigation ─────────────────────────────────────────────────── */
+function goTo(screen) {
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  if (isListening) stopListening();
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + screen).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── Mode select ─────────────────────────────────────────────────── */
+function selectMode(m) {
+  state.mode = m;
+  document.getElementById('mode-jd').classList.toggle('active', m==='jd');
+  document.getElementById('mode-role').classList.toggle('active', m==='role');
+  document.getElementById('jd-panel').style.display   = m==='jd'   ? 'block' : 'none';
+  document.getElementById('role-panel').style.display = m==='role' ? 'block' : 'none';
+  if (m==='role') renderRoleGrid('all');
+}
+
+/* ── Role Grid ───────────────────────────────────────────────────── */
+function renderRoleGrid(cat) {
+  const grid     = document.getElementById('role-grid');
+  grid.innerHTML = '';
+  (cat==='all' ? ROLES : ROLES.filter(r => r.cat===cat)).forEach(role => {
+    const c = document.createElement('div');
+    c.className = 'role-card' + (state.selectedRole?.id===role.id ? ' selected' : '');
+    c.innerHTML = `<span class="ri">${role.icon}</span><div class="rn">${role.name}</div><div class="rc">${role.label}</div>`;
+    c.onclick   = () => { state.selectedRole = role; document.querySelectorAll('.role-card').forEach(x=>x.classList.remove('selected')); c.classList.add('selected'); document.getElementById('role-next-btn').disabled=false; };
+    grid.appendChild(c);
+  });
+}
+
+function filterCat(cat, btn) {
+  document.querySelectorAll('#cat-tabs .tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  renderRoleGrid(cat);
+}
+
+/* ── JD Parse ────────────────────────────────────────────────────── */
+async function parseJD() {
+  const text = document.getElementById('jd-input').value.trim();
+  if (text.length < 30) { showToast('Please paste a proper job description (min 30 chars)'); return; }
+  const btn = document.getElementById('parse-btn');
+  btn.innerHTML = '<span class="loader"></span>Detecting…'; btn.disabled = true;
+  try {
+    const res  = await fetch(`${API}/parse-jd`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({text}) });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    state.selectedRole = { id: data.role_id||'custom', name: data.role, cat:'detected', icon:'🎯', label: data.seniority||'' };
+    document.getElementById('detected-role-name').textContent = data.role;
+    document.getElementById('detected-seniority').textContent = data.seniority||'';
+    document.getElementById('conf-badge').textContent = Math.round((data.confidence||0.9)*100)+'% match';
+    const tags = document.getElementById('skill-tags'); tags.innerHTML='';
+    (data.skills||[]).slice(0,8).forEach(s=>{ const t=document.createElement('span'); t.className='badge badge-gray'; t.textContent=s; tags.appendChild(t); });
+    document.getElementById('detected-box').classList.add('visible');
+    document.getElementById('jd-next-btn').style.display = 'inline-flex';
+  } catch(e) {
+    showToast('Could not reach backend. Is server.py running?'); console.error(e);
+  } finally { btn.innerHTML='Detect Role'; btn.disabled=false; }
+}
+
+function goToConfig() {
+  if (!state.selectedRole) { showToast('Please select a role first'); return; }
+  document.getElementById('config-role-name').textContent = state.selectedRole.name;
+  goTo('config');
+}
+
+/* ── Config ──────────────────────────────────────────────────────── */
+function setCfg(key, val, btn) {
+  state.sessionConfig[key] = val;
+  btn.closest('.config-row').querySelectorAll('.config-opt').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function toggleType(type, btn) {
+  const types = state.sessionConfig.types;
+  const idx   = types.indexOf(type);
+  if (idx===-1) { types.push(type); btn.classList.add('selected'); }
+  else { if (types.length===1){ showToast('At least one type required'); return; } types.splice(idx,1); btn.classList.remove('selected'); }
+}
+
+/* ── Start Session ───────────────────────────────────────────────── */
+async function startSession() {
+  const btn = document.querySelector('#screen-config .btn-primary');
+  btn.innerHTML = '<span class="loader"></span>Loading questions…'; btn.disabled = true;
+  try {
+    const res  = await fetch(`${API}/questions`, { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ role: state.selectedRole.name, role_id: state.selectedRole.id,
+        count: state.sessionConfig.count, difficulty: state.sessionConfig.diff, types: state.sessionConfig.types }) });
+    const data = await res.json();
+    if (!data.questions?.length) throw new Error('No questions returned');
+    state.questions = data.questions; state.currentIdx = 0; state.answers = [];
+    goTo('session'); renderQuestion();
+  } catch(e) {
+    showToast('Failed to load questions. Check backend is running.'); console.error(e);
+  } finally { btn.innerHTML='Start Interview'; btn.disabled=false; }
+}
+
+/* ── Render Question ─────────────────────────────────────────────── */
+function renderQuestion() {
+  const q     = state.questions[state.currentIdx];
+  const total = state.questions.length;
+
+  document.getElementById('q-number').textContent = `Question ${state.currentIdx+1} of ${total}`;
+  document.getElementById('question-text').textContent = q.question;
+
+  const typeClass = {technical:'badge-yellow', behavioral:'badge-green', situational:'badge-warn'}[q.type]||'badge-gray';
+  const tb = document.getElementById('q-type-badge');
+  tb.className = 'badge '+typeClass;
+  tb.textContent = q.type.charAt(0).toUpperCase()+q.type.slice(1);
+
+  document.getElementById('q-progress-fill').style.width = (state.currentIdx/total*100)+'%';
+
+  /* reset answer area */
+  document.getElementById('answer-input').value       = '';
+  document.getElementById('char-count').textContent   = '0 characters';
+  document.getElementById('interim-text').textContent = '';
+  document.getElementById('voice-status').textContent = '';
+  document.getElementById('voice-status').className   = 'voice-status';
+
+  /* reset speak button */
+  resetSpeakBtn();
+
+  /* reset hint + eval */
+  document.getElementById('hint-box').classList.remove('visible');
+  document.getElementById('hint-text').textContent = '';
+  document.getElementById('eval-card').classList.remove('visible');
+
+  /* reset action buttons */
+  document.getElementById('submit-btn').style.display = 'inline-flex';
+  document.getElementById('submit-btn').disabled      = false;
+  document.getElementById('hint-btn').style.display   = 'inline-flex';
+  document.getElementById('skip-btn').style.display   = 'inline-flex';
+  document.getElementById('next-btn').style.display   = 'none';
+
+  document.getElementById('answer-input').focus();
+
+  /* auto-read question aloud after a short delay */
+  setTimeout(() => autoRead(q.question), 500);
+}
+
+/* ── Submit Answer ───────────────────────────────────────────────── */
+async function submitAnswer() {
+  if (isListening) stopListening();
+  const answer = document.getElementById('answer-input').value.trim();
+  if (!answer) { showToast('Please write or speak something before submitting'); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.innerHTML = '<span class="loader"></span>Evaluating…'; btn.disabled = true;
+
+  const q = state.questions[state.currentIdx];
+  try {
+    const res      = await fetch(`${API}/evaluate`, { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ question: q.question, answer, key_points: q.key_points||[], type: q.type }) });
+    const evalData = await res.json();
+    state.answers.push({ question: q, answer, eval: evalData });
+    renderEval(evalData);
+    document.getElementById('submit-btn').style.display = 'none';
+    document.getElementById('hint-btn').style.display   = 'none';
+    document.getElementById('skip-btn').style.display   = 'none';
+    document.getElementById('next-btn').style.display   = 'inline-flex';
+    document.getElementById('next-btn').textContent     = state.currentIdx >= state.questions.length-1 ? 'See Report →' : 'Next →';
+  } catch(e) {
+    showToast('Evaluation failed. Check backend.'); console.error(e);
+    btn.innerHTML='Submit Answer'; btn.disabled=false;
+  }
+}
+
+/* ── Render Eval ─────────────────────────────────────────────────── */
+function renderEval(e) {
+  const s = e.score||0;
+  document.getElementById('eval-score-num').textContent = s;
+  document.getElementById('eval-score-num').style.color = s>=75?'var(--accent)':s>=50?'var(--warn)':'var(--danger)';
+  const [label,cls] = s>=75?['Strong answer','badge-green']:s>=50?['Decent answer','badge-warn']:['Needs work','badge-red'];
+  document.getElementById('eval-score-badge').innerHTML = `<span class="badge ${cls}">${label}</span>`;
+  document.getElementById('eval-score-sub').textContent = s+' / 100';
+  document.getElementById('eval-feedback').textContent  = e.feedback||'';
+  document.getElementById('eval-ideal').textContent     = e.ideal_answer||'';
+  const mw = document.getElementById('eval-missing-wrap');
+  const ml = document.getElementById('eval-missing'); ml.innerHTML='';
+  (e.missing_points||[]).forEach(p=>{ const li=document.createElement('li'); li.textContent=p; ml.appendChild(li); });
+  mw.style.display = (e.missing_points||[]).length ? 'block' : 'none';
+  document.getElementById('eval-card').classList.add('visible');
+}
+
+/* ── Hint / Skip / Next ──────────────────────────────────────────── */
+function showHint() {
+  const q = state.questions[state.currentIdx];
+  document.getElementById('hint-text').textContent = (q.key_points||['Think of a specific example.'])[0];
+  document.getElementById('hint-box').classList.add('visible');
+  document.getElementById('hint-btn').style.display = 'none';
+}
+
+function skipQuestion() {
+  if (isListening) stopListening();
+  const q = state.questions[state.currentIdx];
+  state.answers.push({ question:q, answer:'[Skipped]', eval:{ score:0, feedback:'Skipped', missing_points:[] } });
+  nextQuestion();
+}
+
+function nextQuestion() {
+  state.currentIdx++;
+  if (state.currentIdx >= state.questions.length) { buildReport(); goTo('report'); }
+  else renderQuestion();
+}
+
+/* ── Char Count ──────────────────────────────────────────────────── */
+function updateCharCount() {
+  document.getElementById('char-count').textContent = document.getElementById('answer-input').value.length+' characters';
+}
+
+/* ── Build Report ────────────────────────────────────────────────── */
+function buildReport() {
+  const answers = state.answers;
+  const scored  = answers.filter(a=>a.eval.score>0);
+  const avg     = scored.length ? Math.round(scored.reduce((s,a)=>s+a.eval.score,0)/scored.length) : 0;
+
+  const sEl = document.getElementById('report-score-num');
+  sEl.textContent  = avg;
+  sEl.style.color  = avg>=75?'var(--accent)':avg>=50?'var(--warn)':'var(--danger)';
+  document.getElementById('report-role-badge').textContent  = state.selectedRole?.name||'';
+  document.getElementById('report-count-badge').textContent = answers.length+' questions';
+
+  const barsEl = document.getElementById('score-bars'); barsEl.innerHTML='';
+  const tlm    = {technical:'Technical',behavioral:'Behavioral',situational:'Situational'};
+  ['technical','behavioral','situational'].forEach(type=>{
+    const grp = answers.filter(a=>a.question.type===type); if(!grp.length) return;
+    const ta  = Math.round(grp.reduce((s,a)=>s+(a.eval.score||0),0)/grp.length);
+    const col = ta>=75?'var(--accent)':ta>=50?'var(--warn)':'var(--danger)';
+    barsEl.innerHTML+=`<div class="score-bar-row"><div class="score-bar-label">${tlm[type]}</div><div class="score-bar-bg"><div class="score-bar-fill" data-w="${ta}" style="width:0%;background:${col}"></div></div><div class="score-bar-val">${ta}</div></div>`;
+  });
+  setTimeout(()=>{ document.querySelectorAll('.score-bar-fill').forEach(el=>{ el.style.width=el.dataset.w+'%'; }); },100);
+
+  const qListEl = document.getElementById('report-questions'); qListEl.innerHTML='';
+  answers.forEach((a,i)=>{
+    const s      = a.eval.score||0;
+    const bc     = s>=75?'badge-green':s>=50?'badge-warn':'badge-red';
+    const tc     = {technical:'badge-yellow',behavioral:'badge-green',situational:'badge-warn'}[a.question.type]||'badge-gray';
+    const item   = document.createElement('div'); item.className='report-q-item';
+    item.innerHTML=`
+      <div class="report-q-header">
+        <div class="report-q-text">${i+1}. ${a.question.question}</div>
+        <div style="display:flex;gap:6px;flex-shrink:0;align-items:center">
+          <span class="badge ${tc}">${a.question.type}</span>
+          <span class="badge ${bc}">${a.answer==='[Skipped]'?'Skipped':s}</span>
+        </div>
+      </div>
+      <div class="report-q-body" id="rq-${i}">
+        <div class="report-label">Your Answer</div>
+        <div class="report-value">${a.answer==='[Skipped]'?'<span style="color:var(--muted)">Skipped</span>':a.answer}</div>
+        <div class="report-label">Feedback</div>
+        <div class="report-value">${a.eval.feedback||'—'}</div>
+        <div class="report-label">Ideal Answer</div>
+        <div class="report-value">${a.eval.ideal_answer||'—'}</div>
+        ${(a.eval.missing_points||[]).length?`<div class="report-label">Key Points Missed</div><ul class="missing-list">${(a.eval.missing_points||[]).map(p=>`<li>${p}</li>`).join('')}</ul>`:''}
+      </div>`;
+    item.onclick = ()=>document.getElementById('rq-'+i).classList.toggle('open');
+    qListEl.appendChild(item);
+  });
+}
+
+/* ── Reset ───────────────────────────────────────────────────────── */
+function resetApp() {
+  state.selectedRole=null; state.questions=[]; state.currentIdx=0; state.answers=[];
+  document.getElementById('jd-input').value='';
+  document.getElementById('detected-box').classList.remove('visible');
+  document.getElementById('jd-next-btn').style.display='none';
+  selectMode('jd'); goTo('home');
+}
+
+/* ── Toast ───────────────────────────────────────────────────────── */
+function showToast(msg) {
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+/* ── Init ────────────────────────────────────────────────────────── */
+selectMode('jd');
+if (window.speechSynthesis) {
+  window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged = ()=> window.speechSynthesis.getVoices();
+}
+
+</script>
+</body>
+</html>
